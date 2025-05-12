@@ -39,7 +39,7 @@ function Login() {
     return (
         <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5'>
             <div
-                className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-1 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'
+                className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-2 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'
             >
                 {/* Left Side - Form */}
                 <div className='w-full md:w-1/2 px-5'>
@@ -116,7 +116,7 @@ function Login() {
                         </button>
                     </form>
                     {/* Sign Up Link */}
-                    <div className='mt-4 text-center'>
+                    <div className='mt-4 text-center mb-2 md:mb-0'>
                         <p
                             className='font-medium text-xs text-[#001E57]'
                         >

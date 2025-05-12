@@ -58,7 +58,7 @@ function PasswordResetRequest() {
                             Kodni yubordik, elektron pochtangizni tekshiring! yoki spam qutisini
                         </h1>
                     </div>
-                    <form onSubmit={handleSubmit} className='w-full'>
+                    <form onSubmit={handleSubmit} className='w-full mb-3 md:mb-0'>
                         <div className='relative w-full mt-5 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
                             <label htmlFor="password" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
                                 Kodni kiriting

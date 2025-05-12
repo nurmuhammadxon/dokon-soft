@@ -66,7 +66,7 @@ function PasswordReset() {
                         </h1>
                         <p className='text-[#313131] text-[10px]'>Yangi parolni o’rnatish uchun, parolni kiriting!</p>
                     </div>
-                    <form onSubmit={handleSubmit} className='w-full'>
+                    <form onSubmit={handleSubmit} className='w-full mb-3 md:mb-0'>
                         <div className='relative w-full mt-5 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
                             <label htmlFor="confirmPassword" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
                                 Parol

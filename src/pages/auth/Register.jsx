@@ -50,7 +50,7 @@ function Register() {
     return (
         <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5'>
             <div
-                className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-1 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'
+                className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-2 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'
             >
                 {/* Left Side - image */}
                 <div className='w-1/2 hidden md:block'>
@@ -79,7 +79,7 @@ function Register() {
                     </div>
                     <form onSubmit={handleSubmit} className='w-full'>
                         <div className='w-full flex flex-wrap gap-2'>
-                            <div className='relative w-36 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
+                            <div className='relative w-full md:w-36 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
                                 <label htmlFor="lastName" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
                                     Familyangiz
                                 </label>
@@ -94,7 +94,7 @@ function Register() {
                                     required
                                 />
                             </div>
-                            <div className='relative w-36 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
+                            <div className='relative w-full md:w-36 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
                                 <label htmlFor="firstName" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
                                     Ismingiz
                                 </label>
@@ -109,7 +109,7 @@ function Register() {
                                     required
                                 />
                             </div>
-                            <div className='relative w-36 mt-2 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
+                            <div className='relative w-full md:w-36 mt-2 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
                                 <label htmlFor="email" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
                                     Elektron pochta
                                 </label>
@@ -124,7 +124,7 @@ function Register() {
                                     required
                                 />
                             </div>
-                            <div className='relative w-36 mt-2 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
+                            <div className='relative w-full md:w-36 mt-2 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
                                 <label htmlFor="phone" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
                                     Telefon raqam
                                 </label>
@@ -200,7 +200,7 @@ function Register() {
                             Hisob yaratish
                         </button>
                     </form>
-                    <div className='mt-4 text-center'>
+                    <div className='mt-4 text-center mb-2 md:mb-0'>
                         <p className='font-medium text-xs text-[#001E57]'>
                             Ro’yxatdan o’tganmisiz? <Link
                                 to={'/login'}
