@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import ModalMessage from '../../Components/ModalMessage';
 import PhoneNumber from '../../Components/PhoneNumber';
 import loginImage from '../../assets/login.png';
 import logoLight from '../../assets/light_logo.png';
+import LoadingModal from '../../Components/LoadingModal';
+import AuthButton from '../../Components/AuthButton';
 
 function Login() {
     const [isPassword, setIsPassword] = useState(true);
-    const [isRememberMeChecked, setIsRememberMeChecked] = useState(false);
+    const [isRememberMeChecked, setIsRememberMeChecked] = useState(() => {
+        return sessionStorage.getItem('rememberMe') === 'true';
+    });
+    const [loading, setLoading] = useState(false)
     const [modal, setModal] = useState({
         isOpen: false,
         message: '',
@@ -19,6 +24,7 @@ function Login() {
         phone: '',
         password: ''
     });
+    const navigate = useNavigate()
 
     useEffect(() => {
         const storedPhone = sessionStorage.getItem('phone');
@@ -34,7 +40,11 @@ function Login() {
     const handleCheckboxChange = () => {
         setIsRememberMeChecked(prev => {
             const newValue = !prev;
-            sessionStorage.setItem('rememberMe', newValue);
+            if (newValue) {
+                sessionStorage.setItem('rememberMe', newValue);
+            } else {
+                sessionStorage.removeItem('rememberMe');
+            }
             return newValue;
         });
     };
@@ -49,6 +59,7 @@ function Login() {
     };
 
     const fetchLogin = async () => {
+        setLoading(true)
         try {
             const response = await axios.post(
                 'https://backend-production-612a.up.railway.app/users/login/',
@@ -62,9 +73,16 @@ function Login() {
                     },
                 }
             );
-            console.log("Muvaffaqiyatli:", response);
-            sessionStorage.setItem('phone', value.phone);
-            sessionStorage.setItem('password', value.password);
+            if (sessionStorage.getItem('rememberMe')) {
+                sessionStorage.setItem('phone', value.phone);
+                sessionStorage.setItem('password', value.password);
+            } else {
+                sessionStorage.removeItem('phone', value.phone);
+                sessionStorage.removeItem('password', value.password);
+            }
+            sessionStorage.setItem('access_token', response.data.access_token);
+            sessionStorage.setItem('refresh_token', response.data.refresh_token);
+            navigate('/')
         } catch (error) {
             console.error("Xatolik:", error.response);
             setModal({
@@ -72,6 +90,14 @@ function Login() {
                 message: error.response.data.error,
                 type: 'error',
             });
+        } finally {
+            if (!sessionStorage.getItem('rememberMe')) {
+                setValue({
+                    phone: '',
+                    password: ''
+                })
+            }
+            setLoading(false)
         }
     };
 
@@ -82,12 +108,15 @@ function Login() {
 
     return (
         <>
+            {/* modal */}
             <ModalMessage
                 isOpen={modal.isOpen}
                 message={modal.message}
                 type={modal.type}
                 onClose={closeModal}
             />
+            {/* Loading */}
+            <LoadingModal isLoading={loading} />
             <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5 overflow-x-hidden'>
                 <div className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-2 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'>
                     <div className='w-full md:w-1/2 px-5'>
@@ -138,17 +167,11 @@ function Login() {
                                     />
                                     <p className='text-xs text-[#313131]'>Parolni saqlash</p>
                                 </div>
-                                <Link to={'/password-reset'} className='text-xs text-[#001E57]'>
+                                <Link to={'/password-reset-request'} className='text-xs text-[#001E57]'>
                                     Parolni unutdingizmi?
                                 </Link>
                             </div>
-
-                            <button
-                                type="submit"
-                                className='py-3 w-full mt-6 bg-[#3869EB] text-white font-semibold text-xs rounded-md hover:bg-[#2c58b3] transition-all cursor-pointer'
-                            >
-                                Tizimga kirish
-                            </button>
+                            <AuthButton title='Tizimga kirish' />
                         </form>
 
                         <div className='mt-4 text-center mb-2 md:mb-0'>

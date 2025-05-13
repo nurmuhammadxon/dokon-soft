@@ -9,6 +9,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 // images
 import signupImage from '../../assets/signup.png';
 import logoLight from '../../assets/light_logo.png';
+import AuthButton from '../../Components/AuthButton';
 
 function Register() {
     const [isPassword, setIsPassword] = useState(true);
@@ -27,6 +28,7 @@ function Register() {
         message: '',
         type: 'error',
     });
+    const navigate = useNavigate()
 
     const closeModal = () => {
         setModal(prevModal => ({ ...prevModal, isOpen: false }));
@@ -42,7 +44,7 @@ function Register() {
 
     const fetchRegister = async () => {
         try {
-            const response = await axios.post(
+            await axios.post(
                 "https://backend-production-612a.up.railway.app/users/register/",
                 {
                     first_name: value.firstName,
@@ -57,11 +59,8 @@ function Register() {
                     },
                 }
             );
-            setModal({
-                isOpen: true,
-                message: response.data.message,
-                type: 'success'
-            })
+            sessionStorage.setItem('registerData', JSON.stringify(value))
+            navigate('/verify-email')
         } catch (error) {
             setModal({
                 isOpen: true,
@@ -268,12 +267,7 @@ function Register() {
                                     </p>
                                 </div>
                             </div>
-                            <button
-                                className='py-3 w-full mt-6 bg-[#3869EB] text-white font-semibold text-xs rounded-md hover:bg-[#2c58b3] transition-all cursor-pointer'
-                                onClick={(e) => handleSubmit(e)}
-                            >
-                                Hisob yaratish
-                            </button>
+                            <AuthButton title="Hisob yaratish" />
                         </form>
                         <div className='mt-4 text-center mb-2 md:mb-0'>
                             <p className='font-medium text-xs text-[#001E57]'>

@@ -5,10 +5,12 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 // images
 import loginImage from '../../assets/login.png';
 import logoLight from '../../assets/light_logo.png';
+import AuthButton from '../../Components/AuthButton';
 
 function PasswordResetRequest() {
     const [isCode, setIsCode] = useState(true);
     const [value, setValue] = useState({
+        email: '',
         confirmationCode: ''
     });
 
@@ -60,6 +62,27 @@ function PasswordResetRequest() {
                     </div>
                     <form onSubmit={handleSubmit} className='w-full mb-3 md:mb-0'>
                         <div className='relative w-full mt-5 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
+                            <label htmlFor="email" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
+                                Email
+                            </label>
+                            <input
+                                id="email"
+                                name='email'
+                                type='email'
+                                className='w-full px-4 py-2 bg-transparent text-xs text-[#1C1B1F] outline-none'
+                                placeholder='Emailni kiriting'
+                                value={value.email}
+                                onChange={handleInput}
+                                required
+                            />
+                            <button
+                                className='absolute right-4 top-1/2 -translate-y-1/2 text-lg cursor-pointer'
+                                onClick={(e) => togglePasswordVisibility(e)}
+                            >
+                                {isCode ? <IoEyeOff /> : <IoEye />}
+                            </button>
+                        </div>
+                        <div className='relative w-full mt-5 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
                             <label htmlFor="password" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
                                 Kodni kiriting
                             </label>
@@ -89,14 +112,8 @@ function PasswordResetRequest() {
                                 Qayta yuborish
                             </button>
                         </div>
-                        {/* Login Button */}
-                        <button
-                            className='py-3 w-full mt-6 bg-[#3869EB] text-white font-semibold text-xs rounded-md hover:bg-[#2c58b3] transition-all'
-                        >
-                            Tizimga kirish
-                        </button>
+                        <AuthButton title="Emailni tasdiqlash" />
                     </form>
-                    {/* Sign Up Link */}
                 </div>
 
                 {/* Right Side - Image */}

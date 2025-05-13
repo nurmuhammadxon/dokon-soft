@@ -5,6 +5,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 // images
 import resetPasswordImage from '../../assets/resetPassword.png';
 import logoLight from '../../assets/light_logo.png';
+import AuthButton from '../../Components/AuthButton';
 
 function PasswordReset() {
     const [isPassword, setIsPassword] = useState(true);
@@ -109,12 +110,7 @@ function PasswordReset() {
                                 {isConfirmPassword ? <IoEyeOff /> : <IoEye />}
                             </button>
                         </div>
-                        <button
-                            className='py-3 w-full mt-6 bg-[#3869EB] text-white font-semibold text-xs rounded-md hover:bg-[#2c58b3] transition-all'
-                            onClick={(e) => handleSubmit(e)}
-                        >
-                            Parolni o’rnatish
-                        </button>
+                        <AuthButton title="Parolni o'zgartirish" />
                     </form>
                 </div>
                 {/* Right Side - Image */}
