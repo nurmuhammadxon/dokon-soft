@@ -34,7 +34,7 @@ function PasswordResetRequest() {
     }
 
     return (
-        <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5'>
+        <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5 overflow-x-hidden'>
             <div
                 className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-1 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'
             >
