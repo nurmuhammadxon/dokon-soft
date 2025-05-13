@@ -5,10 +5,12 @@ import ModalMessage from '../../Components/ModalMessage';
 import loginImage from '../../assets/login.png';
 import logoLight from '../../assets/light_logo.png';
 import AuthButton from '../../Components/AuthButton';
+import LoadingModal from '../../Components/LoadingModal';
 
 function VerifyEmail() {
     const [timeLeft, setTimeLeft] = useState(300);
     const [isExpired, setIsExpired] = useState(false);
+    const [loading, setLoading] = useState(false)
     const [modal, setModal] = useState({
         isOpen: false,
         message: '',
@@ -70,6 +72,7 @@ function VerifyEmail() {
     };
 
     const fetchVerifyEmail = async () => {
+        setLoading(true)
         try {
             const response = await axios.post(
                 'https://backend-production-612a.up.railway.app/users/verify/',
@@ -99,11 +102,14 @@ function VerifyEmail() {
                 message: error?.response?.data?.error || "Xatolik yuz berdi.",
                 type: 'error',
             });
+        } finally {
+            setLoading(false)
         }
     };
 
     const resendCode = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
             await axios.post(
                 "https://backend-production-612a.up.railway.app/users/register/",
@@ -130,6 +136,8 @@ function VerifyEmail() {
                 message: error.response.data.error,
                 type: "error",
             });
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -154,6 +162,7 @@ function VerifyEmail() {
                 type={modal.type}
                 onClose={closeModal}
             />
+            <LoadingModal isLoading={loading} />
             <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5 overflow-x-hidden'>
                 <div className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-2 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'>
                     <div className='w-full md:w-1/2 px-5'>

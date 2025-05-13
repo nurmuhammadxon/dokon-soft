@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+// icons
 import { IoEye, IoEyeOff } from "react-icons/io5";
+// components
 import ModalMessage from '../../Components/ModalMessage';
 import PhoneNumber from '../../Components/PhoneNumber';
+import AuthButton from '../../Components/AuthButton';
+import LoadingModal from '../../Components/LoadingModal';
+// image
 import loginImage from '../../assets/login.png';
 import logoLight from '../../assets/light_logo.png';
-import LoadingModal from '../../Components/LoadingModal';
-import AuthButton from '../../Components/AuthButton';
 
 function Login() {
     const [isPassword, setIsPassword] = useState(true);

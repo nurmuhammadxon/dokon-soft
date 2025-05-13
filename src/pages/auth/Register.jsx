@@ -10,11 +10,13 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 import signupImage from '../../assets/signup.png';
 import logoLight from '../../assets/light_logo.png';
 import AuthButton from '../../Components/AuthButton';
+import LoadingModal from '../../Components/LoadingModal';
 
 function Register() {
     const [isPassword, setIsPassword] = useState(true);
     const [isAccepted, setIsAccepted] = useState(false);
     const [isConfirmPassword, setIsConfirmPassword] = useState(true);
+    const [loading, setLoading] = useState(false)
     const [value, setValue] = useState({
         lastName: '',
         firstName: '',
@@ -43,6 +45,7 @@ function Register() {
     };
 
     const fetchRegister = async () => {
+        setLoading(true)
         try {
             await axios.post(
                 "https://backend-production-612a.up.railway.app/users/register/",
@@ -76,6 +79,7 @@ function Register() {
                 password: '',
                 confirmPassword: '',
             })
+            setLoading(false)
         }
     };
 
@@ -122,6 +126,7 @@ function Register() {
                 type={modal.type}
                 onClose={closeModal}
             />
+            <LoadingModal isLoading={loading} />
             <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5 overflow-x-hidden'>
                 <div
                     className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-2 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'
