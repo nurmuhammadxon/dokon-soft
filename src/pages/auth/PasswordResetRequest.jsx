@@ -4,7 +4,7 @@ import axios from 'axios';
 import ModalMessage from '../../Components/ModalMessage';
 import AuthButton from '../../Components/AuthButton';
 import LoadingModal from '../../Components/LoadingModal';
-import loginImage from '../../assets/login.png';
+import resetImage from '../../assets/resetPassword.png';
 import logoLight from '../../assets/light_logo.png';
 
 function PasswordResetRequest() {
@@ -151,25 +151,28 @@ function PasswordResetRequest() {
                                 />
                             </div>
 
-                            <div className='relative mb-5'>
-                                <label htmlFor="verifyCode" className='text-xs text-[#79747E] absolute bg-white px-1 top-[-8px] left-2'>Tasdiqlash kodi</label>
-                                <div className='flex items-center gap-2 border border-[#79747E] rounded-lg px-4 py-2'>
-                                    <input
-                                        id="verifyCode"
-                                        name="verifyCode"
-                                        type="text"
-                                        value={form.verifyCode}
-                                        onChange={handleChange}
-                                        className='w-full text-sm outline-none'
-                                        required={verifyCodeSent}
-                                    />
-                                    {verifyCodeSent && (
-                                        <span className={`text-sm font-medium ${timeLeft <= 60 ? 'text-red-500' : 'text-gray-600'}`}>
-                                            {formatTime(timeLeft)}
-                                        </span>
-                                    )}
+                            {verifyCodeSent && (
+                                <div className='relative mb-5'>
+                                    <label htmlFor="verifyCode" className='text-xs text-[#79747E] absolute bg-white px-1 top-[-8px] left-2'>Tasdiqlash kodi</label>
+                                    <div className='flex items-center gap-2 border border-[#79747E] rounded-lg px-4 py-2'>
+                                        <input
+                                            id="verifyCode"
+                                            name="verifyCode"
+                                            type="text"
+                                            value={form.verifyCode}
+                                            onChange={handleChange}
+                                            className='w-full text-sm outline-none'
+                                            required={verifyCodeSent}
+                                        />
+                                        {verifyCodeSent && (
+                                            <span className={`text-sm font-medium ${timeLeft <= 60 ? 'text-red-500' : 'text-gray-600'}`}>
+                                                {formatTime(timeLeft)}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
+
                             <div className='mt-4 flex items-center gap-1'>
                                 <p className='text-xs text-[#313131]'>Kodni olmadingizmi?</p>
                                 <button
@@ -193,7 +196,7 @@ function PasswordResetRequest() {
                     </div>
 
                     <div className='w-1/2 hidden md:block'>
-                        <img src={loginImage} alt="login" className='w-full h-full object-cover rounded-xl' />
+                        <img src={resetImage} alt="login" className='w-full h-full object-cover rounded-xl' />
                     </div>
                 </div>
             </div>

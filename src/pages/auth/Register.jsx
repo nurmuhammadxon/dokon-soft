@@ -47,7 +47,7 @@ function Register() {
     const fetchRegister = async () => {
         setLoading(true)
         try {
-            await axios.post(
+            const res = await axios.post(
                 "https://backend-production-612a.up.railway.app/users/register/",
                 {
                     first_name: value.firstName,
@@ -62,7 +62,7 @@ function Register() {
                     },
                 }
             );
-            sessionStorage.setItem('email', value.email)
+            sessionStorage.setItem('registerData', JSON.stringify(value))
             navigate('/verify-email')
         } catch (error) {
             setModal({

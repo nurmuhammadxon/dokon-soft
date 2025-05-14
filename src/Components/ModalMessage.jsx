@@ -11,7 +11,7 @@ function ModalMessage({
         if (isOpen) {
             const timer = setTimeout(() => {
                 onClose();
-            }, 5000);
+            }, 3000);
 
             return () => clearTimeout(timer);
         }
@@ -29,10 +29,10 @@ function ModalMessage({
     return (
         <div className='overflow-x-hidden'>
             {/* Overlay */}
-            <div
+            {/* <div
                 className='absolute top-0 left-0 cursor-pointer w-full h-dvw z-40 bg-[#0000004D]'
                 onClick={onClose}
-            />
+            /> */}
             {/* Modal */}
             <div className="absolute top-0 left-0 w-full flex items-start justify-center pt-5">
                 <div
