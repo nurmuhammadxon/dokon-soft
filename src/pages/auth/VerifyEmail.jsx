@@ -16,7 +16,12 @@ function VerifyEmail() {
         message: '',
         type: 'error',
     });
+
     const [value, setValue] = useState({
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        password: '',
         email: '',
         verifyCode: ''
     });
@@ -34,6 +39,21 @@ function VerifyEmail() {
         }, 1000);
 
         return () => clearInterval(timer);
+    }, []);
+
+    useEffect(() => {
+        const registerValue = JSON.parse(sessionStorage.getItem('registerData'))
+
+        if (registerValue) {
+            setValue(prev => ({
+                ...prev,
+                first_name: registerValue.firstName,
+                last_name: registerValue.lastName,
+                password: registerValue.password,
+                phone_number: registerValue.phone,
+                email: registerValue.email
+            }));
+        }
     }, []);
 
     const formatTime = (seconds) => {
@@ -83,31 +103,35 @@ function VerifyEmail() {
 
     const resendCode = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        setLoading(true)
         try {
-            const res = await axios.post(
-                'https://backend-production-612a.up.railway.app/users/send-otp/',
-                { email: value.email },
+            await axios.post(
+                "https://backend-production-612a.up.railway.app/users/register/",
+                {
+                    first_name: value.first_name,
+                    last_name: value.last_name,
+                    password: value.password,
+                    phone_number: value.phone_number,
+                    email: value.email,
+                },
                 { headers: { "Content-Type": "application/json" } }
             );
-            setVerifyCodeSent(true);
             setTimeLeft(300);
             setIsExpired(false);
-            console.log(res);
-
             setModal({
                 isOpen: true,
-                message: 'Tasdiqlash kodi emailingizga yuborildi.',
-                type: 'success',
+                message: "Tasdiqlash kodi qayta yuborildi.",
+                type: "success",
             });
         } catch (error) {
+            console.error("Resend error:", error.response);
             setModal({
                 isOpen: true,
-                message: error?.response?.data?.error || 'Kod yuborilmadi.',
-                type: 'error',
+                message: error.response.data.error,
+                type: "error",
             });
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
     };
 
