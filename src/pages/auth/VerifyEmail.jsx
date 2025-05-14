@@ -16,17 +16,17 @@ function VerifyEmail() {
         message: '',
         type: 'error',
     });
-
     const [value, setValue] = useState({
-        first_name: '',
-        last_name: '',
-        phone_number: '',
-        password: '',
-        email: '',
+        email: sessionStorage.getItem('email') || '',
         verifyCode: ''
     });
 
     useEffect(() => {
+        setModal({
+            isOpen: true,
+            message: 'Tasdiqlash kodi emailingizga yuborildi.',
+            type: 'success',
+        });
         const timer = setInterval(() => {
             setTimeLeft((prev) => {
                 if (prev <= 1) {
@@ -39,21 +39,6 @@ function VerifyEmail() {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, []);
-
-    useEffect(() => {
-        const registerValue = JSON.parse(sessionStorage.getItem('registerData'))
-
-        if (registerValue) {
-            setValue(prev => ({
-                ...prev,
-                first_name: registerValue.firstName,
-                last_name: registerValue.lastName,
-                password: registerValue.password,
-                phone_number: registerValue.phone,
-                email: registerValue.email
-            }));
-        }
     }, []);
 
     const formatTime = (seconds) => {
@@ -71,87 +56,70 @@ function VerifyEmail() {
         setValue((prev) => ({ ...prev, [name]: inputVal }));
     };
 
-    const fetchVerifyEmail = async () => {
-        setLoading(true)
-        try {
-            const response = await axios.post(
-                'https://backend-production-612a.up.railway.app/users/verify/',
-                {
-                    first_name: value.first_name,
-                    last_name: value.last_name,
-                    password: value.password,
-                    phone_number: value.phone_number,
-                    email: value.email,
-                    otp: value.verifyCode
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            setModal({
-                isOpen: true,
-                message: 'Email muvaffaqiyatli tasdiqlandi.',
-                type: 'success'
-            });
-        } catch (error) {
-            console.error("Xatolik:", error.response);
-            setModal({
-                isOpen: true,
-                message: error?.response?.data?.error || "Xatolik yuz berdi.",
-                type: 'error',
-            });
-        } finally {
-            setLoading(false)
-        }
-    };
-
-    const resendCode = async (e) => {
-        e.preventDefault();
-        setLoading(true)
+    const resetEnerCode = async () => {
+        setLoading(true);
         try {
             await axios.post(
-                "https://backend-production-612a.up.railway.app/users/register/",
-                {
-                    first_name: value.first_name,
-                    last_name: value.last_name,
-                    password: value.password,
-                    phone_number: value.phone_number,
-                    email: value.email,
-                },
+                'https://backend-production-612a.up.railway.app/users/send-otp/',
+                { email: value.email },
                 { headers: { "Content-Type": "application/json" } }
             );
             setTimeLeft(300);
             setIsExpired(false);
             setModal({
                 isOpen: true,
-                message: "Tasdiqlash kodi qayta yuborildi.",
-                type: "success",
+                message: 'Tasdiqlash kodi emailingizga yuborildi.',
+                type: 'success',
             });
         } catch (error) {
-            console.error("Resend error:", error.response);
             setModal({
                 isOpen: true,
-                message: error.response.data.error,
-                type: "error",
-            });
-        } finally {
-            setLoading(false)
-        }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (isExpired) {
-            setModal({
-                isOpen: true,
-                message: 'Tasdiqlash vaqti tugadi. Qayta kod yuboring.',
+                message: error?.response?.data?.error || 'Kod yuborilmadi.',
                 type: 'error',
             });
-            return;
+        } finally {
+            setLoading(false);
+            setValue({
+                email: '',
+                verifyCode: ''
+            })
         }
-        fetchVerifyEmail();
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (isExpired) {
+            return setModal({
+                isOpen: true,
+                message: 'Kod muddati tugagan. Qayta yuboring.',
+                type: 'error',
+            });
+        }
+        setLoading(true);
+        try {
+            await axios.post(
+                'https://backend-production-612a.up.railway.app/users/verify/',
+                {
+                    email: value.email,
+                    otp: value.verifyCode
+                },
+                { headers: { "Content-Type": "application/json" } }
+            );
+            setModal({
+                isOpen: true,
+                message: 'Email muvaffaqiyatli tasdiqlandi',
+                type: 'success',
+            });
+        } catch (error) {
+            setModal({
+                isOpen: true,
+                message: error?.response?.data?.error || 'Xatolik yuz berdi.',
+                type: 'error',
+            });
+            console.log('Xatolik' + error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -223,7 +191,7 @@ function VerifyEmail() {
                                 <p className='text-xs text-[#313131]'>Kodni olmadingizmi?</p>
                                 <button
                                     className='text-xs text-[#001EDF] cursor-pointer'
-                                    onClick={resendCode}
+                                    onClick={resetEnerCode}
                                     type='button'
                                 >
                                     Qayta yuborish

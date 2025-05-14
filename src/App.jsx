@@ -49,7 +49,7 @@ function App() {
       )
     },
     {
-      path: 'password-reset',
+      path: 'reset-password',
       element: (
         <PublicRoute>
           <PasswordReset />

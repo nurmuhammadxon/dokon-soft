@@ -1,20 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// icons
 import { IoEye, IoEyeOff } from "react-icons/io5";
-// images
+import AuthButton from '../../Components/AuthButton';
+import ModalMessage from '../../Components/ModalMessage';
+import LoadingModal from '../../Components/LoadingModal';
 import resetPasswordImage from '../../assets/resetPassword.png';
 import logoLight from '../../assets/light_logo.png';
-import AuthButton from '../../Components/AuthButton';
+import axios from 'axios';
 
 function PasswordReset() {
+    const navigate = useNavigate();
     const [isPassword, setIsPassword] = useState(true);
     const [isConfirmPassword, setIsConfirmPassword] = useState(true);
-    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState({
+        isOpen: false,
+        message: '',
+        type: 'error',
+    });
+
     const [value, setValue] = useState({
         password: '',
         confirmPassword: ''
     });
+
+    const [accessToken, setAccessToken] = useState('');
+    const [email, setEmail] = useState('');
+
+    useEffect(() => {
+        const token = sessionStorage.getItem('reset_token');
+        const userEmail = sessionStorage.getItem('reset_email');
+        if (!token || !userEmail) {
+            navigate('/password-reset-request');
+        } else {
+            setAccessToken(token);
+            setEmail(userEmail);
+        }
+    }, [navigate]);
 
     const handleInput = (e) => {
         const { name, value } = e.target;
@@ -24,106 +46,144 @@ function PasswordReset() {
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (value.password !== '' && value.confirmPassword !== '') {
-            if (value.password === value.confirmPassword) {
-                navigate('/password-reset-request')
-            } else {
-                alert('Parol bir xil emas')
-            }
-        } else {
-            alert('Iltimos parolni kiriting')
+    const closeModal = () => setModal(prev => ({ ...prev, isOpen: false }));
+
+    const fetchResetPassword = async () => {
+        setLoading(true);
+        try {
+            const res = await axios.patch(
+                'https://backend-production-612a.up.railway.app/users/reset-password/',
+                {
+                    email: email,
+                    password: value.password
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                }
+            );
+            setModal({
+                isOpen: true,
+                message: 'Parol muvaffaqiyatli o\'zgartirildi!',
+                type: 'success'
+            });
+
+            sessionStorage.removeItem('reset_token');
+            sessionStorage.removeItem('reset_email');
+
+            setTimeout(() => navigate('/login'), 2000);
+        } catch (error) {
+            setModal({
+                isOpen: true,
+                message: error?.response?.data?.error || 'Xatolik yuz berdi!',
+                type: 'error'
+            });
+            console.log('Xatolik', error);
+
+        } finally {
+            setLoading(false);
         }
     };
 
-    const togglePasswordVisibility = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setIsPassword((prev) => !prev);
-    };
 
-    const toggleConfirmPasswordVisibility = (e) => {
-        e.preventDefault();
-        setIsConfirmPassword((prev) => !prev);
+        if (!value.password || !value.confirmPassword) {
+            return setModal({
+                isOpen: true,
+                message: 'Iltimos, barcha maydonlarni to‘ldiring.',
+                type: 'error'
+            });
+        }
+
+        if (value.password !== value.confirmPassword) {
+            return setModal({
+                isOpen: true,
+                message: 'Parollar mos emas.',
+                type: 'error'
+            });
+        }
+
+        fetchResetPassword();
     };
 
     return (
-        <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5 overflow-x-hidden'>
-            <div
-                className='max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl w-full mx-auto rounded-3xl py-1 sm:py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'
-            >
-                {/* Left Side - Form */}
-                <div className='w-full md:w-1/2 px-5'>
-                    <div className='flex justify-start'>
+        <>
+            <ModalMessage {...modal} onClose={closeModal} />
+            <LoadingModal isLoading={loading} />
+
+            <div className='w-screen h-screen flex items-center justify-center font-poppins bg-[#F5F5F5] px-5 overflow-x-hidden'>
+                <div className='max-w-3xl w-full mx-auto rounded-3xl py-5 md:py-10 md:px-6 flex gap-10 bg-white shadow-lg'>
+                    {/* Form */}
+                    <div className='w-full md:w-1/2 px-5'>
+                        <img src={logoLight} alt="logo" className='size-20 md:size-24 mb-4' />
+
+                        <h1 className='font-semibold text-lg text-[#313131] mb-2'>Parolni o’rnatish</h1>
+                        <p className='text-[#313131] text-xs mb-4'>Yangi parolni kiritib tasdiqlang.</p>
+
+                        <form onSubmit={handleSubmit}>
+                            {/* Parol */}
+                            <div className='relative mt-4'>
+                                <label htmlFor="password" className='absolute bg-white px-1 text-xs text-[#79747E] top-[-8px] left-2'>
+                                    Parol
+                                </label>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type={isPassword ? 'password' : 'text'}
+                                    value={value.password}
+                                    onChange={handleInput}
+                                    className='w-full border border-[#79747E] rounded-lg px-4 py-2 text-sm outline-none'
+                                    required
+                                />
+                                <button
+                                    className='absolute right-4 top-1/2 -translate-y-1/2'
+                                    onClick={(e) => { e.preventDefault(); setIsPassword(prev => !prev); }}
+                                >
+                                    {isPassword ? <IoEyeOff /> : <IoEye />}
+                                </button>
+                            </div>
+
+                            {/* Parolni qayta kiriting */}
+                            <div className='relative mt-4'>
+                                <label htmlFor="confirmPassword" className='absolute bg-white px-1 text-xs text-[#79747E] top-[-8px] left-2'>
+                                    Parolni qayta kiriting
+                                </label>
+                                <input
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type={isConfirmPassword ? 'password' : 'text'}
+                                    value={value.confirmPassword}
+                                    onChange={handleInput}
+                                    className='w-full border border-[#79747E] rounded-lg px-4 py-2 text-sm outline-none'
+                                    required
+                                />
+                                <button
+                                    className='absolute right-4 top-1/2 -translate-y-1/2'
+                                    onClick={(e) => { e.preventDefault(); setIsConfirmPassword(prev => !prev); }}
+                                >
+                                    {isConfirmPassword ? <IoEyeOff /> : <IoEye />}
+                                </button>
+                            </div>
+
+                            <AuthButton title="Parolni o'zgartirish" />
+                        </form>
+                    </div>
+
+                    {/* Image */}
+                    <div className='w-1/2 hidden md:block'>
                         <img
-                            src={logoLight}
-                            alt="logo"
-                            className='size-20 md:size-24'
+                            src={resetPasswordImage}
+                            alt="reset password"
+                            className='w-full h-full object-cover object-center rounded-lg'
                         />
                     </div>
-                    <div className='mb-4'>
-                        <h1 className='font-semibold text-lg text-[#313131] mb-2'>
-                            Parolni o’rnatish
-                        </h1>
-                        <p className='text-[#313131] text-[10px]'>Yangi parolni o’rnatish uchun, parolni kiriting!</p>
-                    </div>
-                    <form onSubmit={handleSubmit} className='w-full mb-3 md:mb-0'>
-                        <div className='relative w-full mt-5 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
-                            <label htmlFor="confirmPassword" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
-                                Parol
-                            </label>
-                            <input
-                                id="confirmPassword"
-                                name='confirmPassword'
-                                type={`${isPassword ? 'password' : 'text'}`}
-                                className='w-full px-4 py-2 bg-transparent text-xs text-[#1C1B1F] outline-none'
-                                placeholder='****'
-                                value={value.confirmPassword}
-                                onChange={handleInput}
-                                required
-                            />
-                            <button
-                                className='absolute right-4 top-1/2 -translate-y-1/2 text-lg cursor-pointer'
-                                onClick={(e) => togglePasswordVisibility(e)}
-                            >
-                                {isPassword ? <IoEyeOff /> : <IoEye />}
-                            </button>
-                        </div>
-                        <div className='relative w-full mt-5 rounded-lg border-[0.4px] border-[#79747E] bg-white py-1'>
-                            <label htmlFor="password" className='absolute left-2 top-[-8px] bg-white text-xs text-[#79747E] font-medium'>
-                                Parolni qayta kiritish
-                            </label>
-                            <input
-                                id="password"
-                                name='password'
-                                type={`${isConfirmPassword ? 'password' : 'text'}`}
-                                className='w-full px-4 py-2 bg-transparent text-xs text-[#1C1B1F] outline-none'
-                                placeholder='****'
-                                value={value.password}
-                                onChange={handleInput}
-                                required
-                            />
-                            <button
-                                className='absolute right-4 top-1/2 -translate-y-1/2 text-lg cursor-pointer'
-                                onClick={(e) => toggleConfirmPasswordVisibility(e)}
-                            >
-                                {isConfirmPassword ? <IoEyeOff /> : <IoEye />}
-                            </button>
-                        </div>
-                        <AuthButton title="Parolni o'zgartirish" />
-                    </form>
-                </div>
-                {/* Right Side - Image */}
-                <div className='w-1/2 hidden md:block'>
-                    <img
-                        src={resetPasswordImage}
-                        alt="login image"
-                        className='w-full h-full object-cover object-center rounded-lg'
-                    />
                 </div>
             </div>
-        </div>
-    )
+        </>
+    );
 }
 
-export default PasswordReset
+export default PasswordReset;

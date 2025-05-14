@@ -62,7 +62,7 @@ function Register() {
                     },
                 }
             );
-            sessionStorage.setItem('registerData', JSON.stringify(value))
+            sessionStorage.setItem('email', value.email)
             navigate('/verify-email')
         } catch (error) {
             setModal({

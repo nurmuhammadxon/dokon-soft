@@ -28,13 +28,13 @@ function ModalMessage({
 
     return (
         <div className='overflow-x-hidden'>
-            {/* overfly */}
+            {/* Overlay */}
             <div
-                className='absolute top-0 left-0 cursor-pointer  w-full h-dvw z-40 bg-[#0000004D]'
-                onClick={onClose} />
-            {/* modal */}
-            <div className="flex items-start justify-center pt-5"
-            >
+                className='absolute top-0 left-0 cursor-pointer w-full h-dvw z-40 bg-[#0000004D]'
+                onClick={onClose}
+            />
+            {/* Modal */}
+            <div className="absolute top-0 left-0 w-full flex items-start justify-center pt-5">
                 <div
                     className={`max-w-sm w-full p-4 rounded-lg shadow-md border relative z-50 ${typeStyles[type]} ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}
                 >
