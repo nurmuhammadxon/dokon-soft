@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ModalMessage from '../../Components/ModalMessage';
 import loginImage from '../../assets/login.png';
@@ -8,6 +8,7 @@ import AuthButton from '../../Components/AuthButton';
 import LoadingModal from '../../Components/LoadingModal';
 
 function VerifyEmail() {
+    const navigate = useNavigate()
     const [timeLeft, setTimeLeft] = useState(300);
     const [isExpired, setIsExpired] = useState(false);
     const [loading, setLoading] = useState(false)
@@ -77,13 +78,18 @@ function VerifyEmail() {
             const res = await axios.post(
                 'https://backend-production-612a.up.railway.app/users/verify/',
                 {
+                    first_name: value.first_name,
+                    last_name: value.last_name,
                     email: value.email,
+                    phone_number: value.phone_number,
+                    password: value.password,
                     otp: value.verifyCode
                 },
                 { headers: { "Content-Type": "application/json" } }
             );
-            console.log(res);
-
+            sessionStorage.setItem('access_token', response.data.access_token);
+            sessionStorage.setItem('refresh_token', response.data.refresh_token);
+            navigate('/')
             setModal({
                 isOpen: true,
                 message: 'Email muvaffaqiyatli tasdiqlandi.',

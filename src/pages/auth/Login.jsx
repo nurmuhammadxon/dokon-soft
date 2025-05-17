@@ -13,6 +13,7 @@ import loginImage from '../../assets/login.png';
 import logoLight from '../../assets/light_logo.png';
 
 function Login() {
+    const navigate = useNavigate()
     const [isPassword, setIsPassword] = useState(true);
     const [isRememberMeChecked, setIsRememberMeChecked] = useState(() => {
         return sessionStorage.getItem('rememberMe') === 'true';
@@ -27,7 +28,6 @@ function Login() {
         phone: '',
         password: ''
     });
-    const navigate = useNavigate()
 
     useEffect(() => {
         const storedPhone = sessionStorage.getItem('phone');
