@@ -17,7 +17,6 @@ function VerifyEmail() {
         message: '',
         type: 'error',
     });
-
     const [value, setValue] = useState({
         first_name: '',
         last_name: '',
@@ -87,8 +86,8 @@ function VerifyEmail() {
                 },
                 { headers: { "Content-Type": "application/json" } }
             );
-            sessionStorage.setItem('access_token', response.data.access_token);
-            sessionStorage.setItem('refresh_token', response.data.refresh_token);
+            sessionStorage.setItem('access_token', res.data.access_token);
+            sessionStorage.setItem('refresh_token', res.data.refresh_token);
             navigate('/')
             setModal({
                 isOpen: true,
@@ -225,6 +224,7 @@ function VerifyEmail() {
                                     className='text-xs text-[#001EDF] cursor-pointer'
                                     onClick={resendCode}
                                     type='button'
+                                    disabled={!isExpired}
                                 >
                                     Qayta yuborish
                                 </button>
