@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+    /* Primary Dark Blue */
+    --color-primaryDarkBlue100: #001E57;
+    --color-primaryDarkBlue90: #1A3568;
+    --color-primaryDarkBlue80: #334B79;
+    --color-primaryDarkBlue70: #4D628A;
+    --color-primaryDarkBlue60: #66789A;
+    --color-primaryDarkBlue50: #7F8EAA;
+    --color-primaryDarkBlue40: #99A5BC;
+    --color-primaryDarkBlue30: #B3BCCD;
+    --color-primaryDarkBlue20: #CCD2DD;
+    --color-primaryDarkBlue10: #E6E9EF;
+    /* Primary Yellow  */
+    --color-primaryYellow100: #F9C92C;
+    --color-primaryYellow90: #FACF42;
+    --color-primaryYellow80: #FAD456;
+    --color-primaryYellow70: #FBDA6C;
+    --color-primaryYellow60: #FBDF80;
+    --color-primaryYellow50: #FBE395;
+    --color-primaryYellow40: #FDE9AB;
+    --color-primaryYellow30: #FEEFC0;
+    --color-primaryYellow20: #FEF4D5;
+    --color-primaryYellow10: #FFFAEA;
+    /* White */
+    --color-myWhite: #F9FAFB;
+    /* Black */
+    --color-myBlack: #1F1F1F;
+}
+
+* {
+    font-family: Manrope;
+}
+
+html {
+    scroll-behavior: smooth;
+}
