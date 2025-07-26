@@ -2,7 +2,7 @@ import React from 'react'
 // pages
 import HeroPage from './HeroPage'
 import AboutUs from './AboutUs'
-import OurAdvantages from './Ouradvantages'
+import OurAdvantages from './OurAdvantages'
 import NetworkTypesPage from './NetworkTypesPage'
 import FAQ from './FAQ'
 
