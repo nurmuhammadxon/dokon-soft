@@ -7,18 +7,18 @@ import { headerMenu, selectLanguage } from '../constants'
 // components
 import SelectLanguageList from './SelectLanguageList'
 
-const HeaderNavList = ({ data, onClickLink }) => {
+const HeaderNavList = ({ data }) => {
     const pathName = useLocation().hash
+    console.log(pathName);
 
     return (
-        <ul className='flex flex-col md:flex-row gap-6'>
+        <ul className='flex flex-col lg:flex-row gap-6'>
             {
                 data.map(({ id, title, link }) => (
                     <li key={id}>
                         <a
                             href={link}
                             className={`text-lg ${pathName === link ? 'text-primaryYellow90 hover:text-primaryYellow70' : 'text-myBlack hover:text-primaryDarkBlue80'}`}
-                            onClick={onClickLink}
                         >
                             {title}
                         </a>
@@ -72,9 +72,9 @@ function Header() {
 
             {/* Slide-in Mobile Menu */}
             <div
-                className={`fixed top-0 right-0 h-full w-[280px] bg-white shadow-lg z-50 px-6 py-5 transition-transform duration-300 ease-in-out
+                className={`fixed top-0 right-0 h-full w-[300px] bg-white shadow-lg z-50 px-6 py-5 transition-transform duration-300 ease-in-out
                 ${isOpenMenu ? 'translate-x-0' : 'translate-x-full'}
-                md:hidden`}
+                lg:hidden`}
             >
                 <div className='flex justify-end mb-6'>
                     <button onClick={() => setIsOpenMenu(false)}>
@@ -87,13 +87,13 @@ function Header() {
                 <div className='mt-8 flex flex-col gap-4'>
                     <a
                         href="#"
-                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myWhite bg-primaryDarkBlue100 hover:bg-primaryDarkBlue80 p-3'
+                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myWhite bg-primaryDarkBlue100 hover:bg-primaryDarkBlue80 p-3 text-center'
                     >
                         Tizimga kirish
                     </a>
                     <a
                         href="#"
-                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myBlack bg-primaryYellow100 hover:bg-primaryYellow80 p-3'
+                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myBlack bg-primaryYellow100 hover:bg-primaryYellow80 p-3 text-center'
                     >
                         Ro'yxatdan o'tish
                     </a>
@@ -103,7 +103,7 @@ function Header() {
             {
                 isOpenMenu && (
                     <div
-                        className='fixed inset-0 bg-black/40 z-40 md:hidden'
+                        className='fixed inset-0 bg-black/40 z-40 lg:hidden'
                         onClick={() => setIsOpenMenu(false)}
                     ></div>
                 )

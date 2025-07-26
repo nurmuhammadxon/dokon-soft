@@ -16,7 +16,7 @@ export const headerMenu = [
     {
         id: uuidv4(),
         title: 'FAQ',
-        link: '#faq ',
+        link: '#faq',
     },
 ]
 
