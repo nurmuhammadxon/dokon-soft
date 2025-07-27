@@ -15,7 +15,7 @@ function HeroPage() {
     const { t } = useTranslation()
 
     return (
-        <section className='relative overflow-hidden responsive-padding sm:mt-10 md:mt-14 min-h-[400px] sm:min-h-[600px] flex items-center'>
+        <section className='relative overflow-hidden responsive-padding mt-8 md:mt-14  min-h-[400px] sm:min-h-[500px] flex items-center'>
             {/* Yellow background wave - Left side */}
             <div className="absolute top-10 left-[-100px] w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-primaryYellow20 rounded-full blur-[100px] z-0" />
             {/* Yellow background wave - Right side */}

@@ -16,7 +16,7 @@ function Button({ title, colorType, onClickBtn }) {
 
     return (
         <button
-            className={`font-medium text-base md:text-lg sm:leading-7 rounded-xl cursor-pointer transition-all duration-300 ${colorClasses} p-3.5`}
+            className={`font-medium text-sm sm:text-base md:text-lg sm:leading-7 rounded-xl cursor-pointer transition-all duration-300 ${colorClasses} p-3.5`}
             type="button"
             onClick={onClickBtn}
         >

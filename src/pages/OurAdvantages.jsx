@@ -22,8 +22,7 @@ const TextCardBottom = ({ title, des, img, bgColorType }) => {
 
     return (
         <div
-            className={`relative w-full p-5 rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-200 ${bgColor} 
-            sm:h-[315px]`}
+            className={`advantagesCard ${bgColor}`}
         >
             <div className="relative z-10">
                 <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl">{title}</h3>
@@ -47,18 +46,18 @@ function OurAdvantages() {
             className="responsive-padding"
             id='ourAdvantages'
         >
-            <h2 className="font-bold text-3xl sm:text-4xl text-myBlack">
+            <h2 className="sectionTitle">
                 {t('titleAdvantages')}
             </h2>
             {/* Contents */}
             <div className="grid grid-cols-1 lg:grid-cols-2 sm:gap-4 mt-4">
                 {/* left content */}
                 <div className="grid gap-2.5 sm:gap-4">
-                    <div className="relative p-5 bg-primaryDarkBlue80 rounded-2xl overflow-hidden min-h-[350px] md:min-h-[650px] w-full hover:-translate-y-2 transition-all duration-200">
+                    <div className="bg-primaryDarkBlue80 min-h-[350px]! md:min-h-[650px]! advantagesCard">
                         <img
                             src="/slang-to-the-moon.png"
                             alt="moon"
-                            className="absolute top-0 right-0 w-40 sm:w-60 md:w-80 object-contain"
+                            className="absolute top-0 right-0 object-contain w-52"
                         />
                         <div className="absolute bottom-7 left-6 right-6 z-10">
                             <h3 className="font-semibold text-2xl sm:text-3xl text-myWhite">

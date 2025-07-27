@@ -10,7 +10,7 @@ function AboutUs() {
             className='responsive-padding'
             id='aboutUs'
         >
-            <h2 className='text-myBlack font-bold text-3xl sm:text-4xl text-left'>
+            <h2 className='sectionTitle'>
                 {t('titleAbout')}
             </h2>
             <div className='pt-4'>

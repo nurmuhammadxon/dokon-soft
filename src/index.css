@@ -60,6 +60,13 @@ html {
     background-color: var(--color-primaryYellow80);
 }
 
+.sectionTitle {
+    color: var(--color-myBlack);
+    font-weight: 700;
+    font-size: 36px;
+    text-align: left;
+}
+
 /* header style */
 .header_btn {
     display: inline-block;
@@ -71,6 +78,22 @@ html {
     padding: 12px;
     text-align: center;
     border-radius: 10px;
+}
+
+/* advantages */
+.advantagesCard {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all;
+    transition-duration: 200ms;
+    min-height: 315px;
+}
+
+.advantagesCard:hover {
+    transform: translateY(-8px);
 }
 
 /* footer style */
@@ -86,10 +109,20 @@ html {
 }
 
 /* media */
+@media (min-width:480px) {
+    .sectionTitle {
+        font-size: 24px;
+    }
+}
+
 @media (min-width: 640px) {
     .responsive-padding {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 30px;
     }
 }
 

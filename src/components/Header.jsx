@@ -41,13 +41,13 @@ function Header() {
     }
 
     return (
-        <header className='px-6 lg:px-10 xl:px-14 py-3.5 w-full fixed top-0 left-0 bg-white z-50 shadow'>
+        <header className='px-4 md:px-6 lg:px-10 xl:px-14 py-1.5 md:py-3.5 w-full fixed top-0 left-0 bg-white z-50 shadow'>
             <div className='w-full flex items-center justify-between'>
                 <a href='/'>
                     <img
                         src='/Logo.svg'
                         alt='Logo'
-                        className='w-[130px] h-[45px] object-cover'
+                        className='w-20 md:w-[130px] h-[45px] object-contain'
                     />
                 </a>
 

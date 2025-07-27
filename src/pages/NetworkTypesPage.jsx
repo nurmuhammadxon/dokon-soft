@@ -32,8 +32,8 @@ function NetworkTypesPage() {
     const { t } = useTranslation()
     const { networkTypeMenu } = useNetworkTypeData()
     return (
-        <section className='responsive-padding'>
-            <h2 className="font-bold text-3xl sm:text-4xl text-myBlack mt-8">
+        <section className='responsive-padding pt-10!'>
+            <h2 className="sectionTitle">
                 {t('titleNetworkType')}
             </h2>
             {/* content */}

@@ -35,7 +35,7 @@ function FAQ() {
             className='responsive-padding'
             id='faq'
         >
-            <h2 className='font-bold text-3xl sm:text-4xl text-myBlack mt-8'>
+            <h2 className='sectionTitle mt-8'>
                 {t('titleFaq')} (FAQ)
             </h2>
 
