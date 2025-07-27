@@ -1,6 +1,9 @@
 import React from 'react'
 import { IoChevronUpOutline } from "react-icons/io5";
-import { faqList } from '../constants/index'
+// i18next
+import { useTranslation } from 'react-i18next';
+// faq data
+import { useFAQData } from '../constants/index'
 
 const FAQCard = ({ question, answer }) => {
     return (
@@ -24,13 +27,16 @@ const FAQCard = ({ question, answer }) => {
 }
 
 function FAQ() {
+    const { faqList } = useFAQData()
+    const { t } = useTranslation()
+
     return (
         <section
-            className='bg-primaryDarkBlue5 px-4 sm:px-6 md:px-10 md:mt-6 md:pt-12 rounded-3xl'
+            className='responsive-padding'
             id='faq'
         >
             <h2 className='font-bold text-3xl sm:text-4xl text-myBlack mt-8'>
-                Tez-tez so'raladigan savollar (FAQ)
+                {t('titleFaq')} (FAQ)
             </h2>
 
             <div className='columns-1 md:columns-2 gap-6 my-4 md:my-8 [&>*]:mb-4 md:[&>*]:mb-6'>

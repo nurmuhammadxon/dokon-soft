@@ -1,14 +1,14 @@
 import React from 'react';
 
-function Button({ title, colorType, }) {
+function Button({ title, colorType, onClickBtn }) {
     let colorClasses = '';
 
     switch (colorType) {
         case 'primaryDark':
-            colorClasses = 'text-myWhite bg-primaryDarkBlue100 hover:bg-primaryDarkBlue80';
+            colorClasses = 'btnBlue';
             break;
         case 'primaryYellow':
-            colorClasses = 'text-myBlack bg-primaryYellow100 hover:bg-primaryYellow80';
+            colorClasses = 'btnYellow';
             break;
         default:
             colorClasses = 'text-black bg-gray-200 hover:bg-gray-300';
@@ -18,6 +18,7 @@ function Button({ title, colorType, }) {
         <button
             className={`font-medium text-base md:text-lg sm:leading-7 rounded-xl cursor-pointer transition-all duration-300 ${colorClasses} p-3.5`}
             type="button"
+            onClick={onClickBtn}
         >
             {title}
         </button>

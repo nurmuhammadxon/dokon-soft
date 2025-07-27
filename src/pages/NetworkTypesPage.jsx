@@ -1,8 +1,10 @@
 import React from 'react'
 // import data
-import { networkTypeMenu } from '../constants/index'
+import { useNetworkTypeData } from '../constants/index'
+// i18next
+import { useTranslation } from 'react-i18next'
 
-const Card = ({ title, des = '', imgUrl, isBgColor = true }) => {
+const Card = ({ title, des, imgUrl, isBgColor = true }) => {
 
     return (
         <div className='sm:max-w-[350px] lg:max-w-[430px] w-full bg-primaryDarkBlue10 rounded-2xl p-5 md:p-7 hover:scale-105 transition-all duration-300'>
@@ -27,10 +29,12 @@ const Card = ({ title, des = '', imgUrl, isBgColor = true }) => {
 }
 
 function NetworkTypesPage() {
+    const { t } = useTranslation()
+    const { networkTypeMenu } = useNetworkTypeData()
     return (
-        <section className='px-6 md:px-10 md:pt-10'>
+        <section className='responsive-padding'>
             <h2 className="font-bold text-3xl sm:text-4xl text-myBlack mt-8">
-                Tarmoq turlari
+                {t('titleNetworkType')}
             </h2>
             {/* content */}
             <div className='w-full grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center my-4 sm:my-8'>

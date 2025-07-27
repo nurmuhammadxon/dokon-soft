@@ -36,3 +36,67 @@
 html {
     scroll-behavior: smooth;
 }
+
+.responsive-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.btnBlue {
+    color: var(--color-myWhite);
+    background-color: var(--color-primaryDarkBlue100);
+}
+
+.btnBlue:hover {
+    background-color: var(--color-primaryDarkBlue80);
+}
+
+.btnYellow {
+    color: var(--color-myBlack);
+    background-color: var(--color-primaryYellow100);
+}
+
+.btnYellow:hover {
+    background-color: var(--color-primaryYellow80);
+}
+
+/* header style */
+.header_btn {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    transition: all;
+    transition-duration: 300ms;
+    padding: 12px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* footer style */
+.footerText {
+    color: var(--color-myBlack);
+    transition: all;
+    transition-duration: 200ms;
+    font-weight: 400;
+}
+
+.footerText:hover {
+    color: var(--color-primaryDarkBlue90);
+}
+
+/* media */
+@media (min-width: 640px) {
+    .responsive-padding {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .responsive-padding {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+        padding-top: 5rem;
+    }
+}

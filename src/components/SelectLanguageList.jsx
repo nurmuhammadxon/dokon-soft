@@ -1,15 +1,21 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
-const SelectLanguageList = ({ data }) => {
+const SelectLanguageList = ({ changeLang }) => {
+    const languageOptions = [
+        { id: 'uz', language: 'UZ' },
+        { id: 'ru', language: 'RU' },
+    ];
+
+    const [selected, setSelected] = useState(languageOptions[0]); // default: UZ
     const [open, setOpen] = useState(false);
-    const [selected, setSelected] = useState(data[0]);
 
     const toggleDropdown = () => setOpen(!open);
 
-    const handleSelect = (lang) => {
-        setSelected(lang);
+    const handleSelect = (item) => {
+        setSelected(item);
         setOpen(false);
+        changeLang(item.id); 
     };
 
     return (
@@ -25,11 +31,13 @@ const SelectLanguageList = ({ data }) => {
             {open && (
                 <div className="absolute right-0 mt-2 w-24 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
                     <div className="py-1 text-sm text-myBlack">
-                        {data.map((item) => (
+                        {languageOptions.map((item) => (
                             <button
                                 key={item.id}
                                 onClick={() => handleSelect(item)}
-                                className={`flex justify-between items-center w-full px-4 py-2 hover:bg-gray-100 cursor-pointer ${selected.id === item.id ? 'text-primaryYellow100 font-semibold' : ''
+                                className={`flex justify-between items-center w-full px-4 py-2 hover:bg-gray-100 cursor-pointer ${selected.id === item.id
+                                        ? 'text-primaryYellow100 font-semibold'
+                                        : ''
                                     }`}
                             >
                                 {item.language}

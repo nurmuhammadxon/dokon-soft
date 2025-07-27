@@ -1,8 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { footerMenu, socialLinks } from '../constants'
+// i18next
+import { useTranslation } from 'react-i18next'
+// constants
+import { siteSections, socialLinks } from '../constants'
 
 const Footer = () => {
+    const { t } = useTranslation()
+
     return (
         <footer className="w-full bg-primaryDarkBlue10 px-5 md:px-10 lg:px-14 py-10">
             <div className="flex flex-col md:flex-row justify-between gap-4 sm:gap-6 md:gap-10 flex-wrap">
@@ -17,19 +22,19 @@ const Footer = () => {
                         />
                     </a>
                     <p className="mt-5 text-base md:text-lg font-normal text-myBlack">
-                        Savdo, Moliya, Ombor, HR – barchasi yagona DSOFT ERP/CRM tizimida. Ish jarayonlarini avtomatlashtiring, savdoni oshiring.
+                        {t('subtitleFooter')}
                     </p>
                 </div>
 
                 {/* Navigation links */}
                 <ul className="flex flex-col gap-3">
-                    {footerMenu.map(({ id, item, linkId }) => (
+                    {siteSections.map(({ id, title, link }) => (
                         <li key={id}>
                             <a
-                                href={linkId}
-                                className="text-base md:text-lg font-normal text-myBlack hover:text-primaryDarkBlue90 transition-colors duration-150"
+                                href={link}
+                                className="text-base md:text-lg footerText"
                             >
-                                {item}
+                                {t(title)}
                             </a>
                         </li>
                     ))}
@@ -39,7 +44,7 @@ const Footer = () => {
                 <div className="flex flex-col gap-2.5 sm:gap-4">
                     <div>
                         <p className="text-base md:text-lg font-normal text-myBlack">
-                            Biz bilan bog'lanish uchun:
+                            {t('footerContact')}:
                         </p>
                         <p className="text-base md:text-lg font-normal text-primaryDarkBlue90">
                             +998 99 999 99 99
@@ -48,7 +53,7 @@ const Footer = () => {
 
                     <div className="mt-2">
                         <p className="text-base md:text-lg font-normal text-myBlack">
-                            Ijtimoiy tarmoqlar:
+                            {t('footerSocial')}:
                         </p>
                         <ul className="flex items-center gap-4 mt-3">
                             {socialLinks.map(({ id, name, icon: Icon, url }) => (
@@ -74,21 +79,21 @@ const Footer = () => {
 
             {/* Footer bottom section */}
             <div className="flex flex-col md:flex-row items-center justify-between mt-12 gap-5">
-                <p className="text-sm font-normal text-myBlack text-center md:text-left">
-                    © {new Date().getFullYear()} Barcha huquqlar himoyalangan
+                <p className="footerBottom text-center md:text-left">
+                    © {new Date().getFullYear()} {t('allRightsReserved')}
                 </p>
                 <div className="flex flex-wrap gap-5">
                     <Link
                         to="#"
-                        className="text-sm font-normal text-myBlack hover:text-primaryDarkBlue90 transition-colors duration-150"
+                        className="footerText text-sm"
                     >
-                        Foydalanuvchi qoidalari
+                        {t('termsOfUse')}
                     </Link>
                     <Link
                         to="#"
-                        className="text-sm font-normal text-myBlack hover:text-primaryDarkBlue90 transition-colors duration-150"
+                        className="footerText text-sm"
                     >
-                        Maxfiylik siyosati
+                        {t('privacyPolicy')}
                     </Link>
                 </div>
             </div>

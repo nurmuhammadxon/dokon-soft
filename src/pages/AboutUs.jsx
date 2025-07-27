@@ -1,13 +1,17 @@
 import React from 'react';
+// i18next
+import { useTranslation } from 'react-i18next';
 
 function AboutUs() {
+    const { t } = useTranslation()
+
     return (
         <section
-            className='px-4 sm:px-6 md:px-10 md:pt-20'
+            className='responsive-padding'
             id='aboutUs'
         >
             <h2 className='text-myBlack font-bold text-3xl sm:text-4xl text-left'>
-                Biz haqimizda
+                {t('titleAbout')}
             </h2>
             <div className='pt-4'>
                 {/* Img */}
@@ -23,12 +27,12 @@ function AboutUs() {
                 <div className='flex flex-col sm:flex-row items-start justify-between w-full gap-2.5 md:gap-6 mt-6'>
                     <div className='w-full sm:w-[48%]'>
                         <p className='font-normal text-base sm:text-lg text-primaryDarkBlue50 text-left sm:text-left'>
-                            Biz — zamonaviy va qulay ERP tizimini yaratishga bel bog‘lagan yosh va g‘ayratli jamoamiz. Garchi hali katta tajribaga ega bo‘lmasak-da, har bir mijozimiz uchun chin dildan xizmat qilishga tayyormiz.
+                            {t('textLeft')}
                         </p>
                     </div>
                     <div className='w-full sm:w-[48%]'>
                         <p className='font-normal text-base sm:text-lg text-primaryDarkBlue50 text-left sm:text-right'>
-                            Maqsadimiz — kichik va o‘rta bizneslarga o‘z faoliyatini raqamlashtirish, samaradorligini oshirish va vaqtni tejashda yordam beradigan ERP yechimlarni taqdim etish.
+                            {t('textRight')}
                         </p>
                     </div>
                 </div>

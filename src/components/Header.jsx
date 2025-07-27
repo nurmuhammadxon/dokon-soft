@@ -3,13 +3,16 @@ import { useLocation } from 'react-router-dom'
 // icons
 import { RiMenu4Fill, RiCloseLine } from "react-icons/ri"
 // constants
-import { headerMenu, selectLanguage } from '../constants'
+import { siteSections } from '../constants'
 // components
 import SelectLanguageList from './SelectLanguageList'
+// i18next
+import { useTranslation } from 'react-i18next'
+import i18n from '../locale/i18n';
 
 const HeaderNavList = ({ data }) => {
     const pathName = useLocation().hash
-    console.log(pathName);
+    const { t } = useTranslation()
 
     return (
         <ul className='flex flex-col lg:flex-row gap-6'>
@@ -20,7 +23,7 @@ const HeaderNavList = ({ data }) => {
                             href={link}
                             className={`text-lg ${pathName === link ? 'text-primaryYellow90 hover:text-primaryYellow70' : 'text-myBlack hover:text-primaryDarkBlue80'}`}
                         >
-                            {title}
+                            {t(title)}
                         </a>
                     </li>
                 ))
@@ -31,6 +34,11 @@ const HeaderNavList = ({ data }) => {
 
 function Header() {
     const [isOpenMenu, setIsOpenMenu] = useState(false)
+    const { t } = useTranslation()
+
+    const changeLang = (value) => {
+        i18n.changeLanguage(value)
+    }
 
     return (
         <header className='px-6 lg:px-10 xl:px-14 py-3.5 w-full fixed top-0 left-0 bg-white z-50 shadow'>
@@ -45,25 +53,24 @@ function Header() {
 
                 {/* Desktop */}
                 <nav className='hidden lg:flex items-center gap-6'>
-                    <HeaderNavList data={headerMenu} />
-                    <SelectLanguageList data={selectLanguage} />
+                    <HeaderNavList data={siteSections} />
+                    <SelectLanguageList changeLang={changeLang} />
                     <a
                         href="#"
-                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myWhite bg-primaryDarkBlue100 hover:bg-primaryDarkBlue80 p-3 text-center'
-                    >
-                        Tizimga kirish
+                        className='header_btn text-myWhite bg-primaryDarkBlue100 hover:bg-primaryDarkBlue80'>
+                        {t('signIn')}
                     </a>
                     <a
                         href="#"
-                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myBlack bg-primaryYellow100 hover:bg-primaryYellow80 p-3 text-center'
+                        className='header_btn text-myBlack bg-primaryYellow100 hover:bg-primaryYellow80'
                     >
-                        Ro'yxatdan o'tish
+                        {t('signUp')}
                     </a>
                 </nav>
 
                 {/* Mobile */}
                 <div className='lg:hidden flex items-center gap-4'>
-                    <SelectLanguageList data={selectLanguage} />
+                    <SelectLanguageList changeLang={changeLang} />
                     <button onClick={() => setIsOpenMenu(true)}>
                         <RiMenu4Fill size={32} className='text-myBlack' />
                     </button>
@@ -82,20 +89,20 @@ function Header() {
                     </button>
                 </div>
 
-                <HeaderNavList data={headerMenu} onClickLink={() => setIsOpenMenu(false)} />
+                <HeaderNavList data={siteSections} onClickLink={() => setIsOpenMenu(false)} />
 
                 <div className='mt-8 flex flex-col gap-4'>
                     <a
                         href="#"
-                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myWhite bg-primaryDarkBlue100 hover:bg-primaryDarkBlue80 p-3 text-center'
+                        className='header_btn text-myWhite bg-primaryDarkBlue100 hover:bg-primaryDarkBlue80'
                     >
-                        Tizimga kirish
+                        {t('signIn')}
                     </a>
                     <a
                         href="#"
-                        className='inline-block font-medium text-base xl:text-lg xl:leading-7 rounded-xl transition-all duration-300 text-myBlack bg-primaryYellow100 hover:bg-primaryYellow80 p-3 text-center'
+                        className='header_btn  text-myBlack bg-primaryYellow100 hover:bg-primaryYellow80'
                     >
-                        Ro'yxatdan o'tish
+                        {t('signUp')}
                     </a>
                 </div>
             </div>
